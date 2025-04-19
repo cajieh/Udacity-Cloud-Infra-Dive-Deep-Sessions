@@ -7,3 +7,23 @@
 
 # Ignore Terraform directories
 .terraform/
+
+# Ignore env file
+.env
+
+# Ignore Terraform plan files
+*.tfplan
+main.tfplan
+# Ignore Terraform variables files
+*.tfvars
+# Ignore Terraform workspace files
+*.tfworkspace
+
+# ssh key
+# Ignore SSH keys
+*.pem
+# Ignore SSH config files
+*.ssh
+
+# Ignore Packer variable files
+variables.pkrvars.hcl
