@@ -1,4 +1,4 @@
-## Cloud Infra Demo - Terrform
+## Cloud Infra Demo - Terraform
 
 ### Introduction
 This Terraform configuration defines a complete infrastructure setup in Azure, including a resource group, virtual network, jumpbox virtual machines, virtual machine scale set (VMSS), load balancer, network security group (NSG), and a Kubernetes cluster. Below is a detailed explanation of the key components:
@@ -221,3 +221,7 @@ Optional: Use `terraform output` to print the details of resources
     ```
 
 - Access the Kubernetes cluster using the kubeconfig file.
+  ```
+  az aks get-credentials --resource-group k8s-cluster-demo-rg --name aks-cluster
+  ```
+  This command fetches the kubeconfig file, and merge it as current context. It is an Azure CLI command used to retrieve the kubeconfig file for an Azure Kubernetes Service (AKS) cluster. This file allows you to interact with the Kubernetes cluster using tools like kubectl.
