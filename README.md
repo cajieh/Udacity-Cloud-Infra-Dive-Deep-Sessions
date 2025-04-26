@@ -18,8 +18,13 @@ The session will focus on reviewing key course concepts of “Azure Infrastructu
 N.B. If you have a quick question, please don't hesitate to ask. Additionally, a Q&A session will be held at the end of the presentation.
 
 ### About Me:
-I am Cyril, and I am an experienced Cloud-Native Software Engineer by training and trade. I have a decade of expertise in open-source technologies, cloud-native and enterprise applications development across several industries. Currently, I work at an open-source software company and am also a tech mentor at Udacity.  I hold a Master's degree in Computer Science and technology certifications from Microsoft, IBM, and Cloud Native Computing Foundation. 
-I live in the Research Triangle area of North Carolina with my beautiful wife and lovely children. When I'm not working, I enjoy spending time with my family and friends, sharing stories and experiences from my Christian faith, listening to music, exercising, and watching sporting events.
+- An experienced Cloud-Native Software Engineer by training and trade
+- A decade of expertise in open-source and cloud-native technologies, as well as enterprise application development across several industries
+- Work at an open-source software company and also serve as a tech mentor at Udacity
+- Hold a Master's degree in Computer Science and technology certifications from Microsoft, IBM, and the Cloud Native Computing Foundation
+- A Certified Kubernetes Administrator (CKA) and Certified Kubernetes Application Developer certifications (CKAD)                                                                    
+- Happily married with two lovely daughters, I enjoy spending time with my family and friends, sharing Christian faith stories, listening to music, and watching sporting events
+
 
 ### Demo: Deploy modern cloud infrastructure resources on Azure using Terraform and Packer
 
