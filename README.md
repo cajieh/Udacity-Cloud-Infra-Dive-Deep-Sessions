@@ -205,7 +205,7 @@ resource "azurerm_network_interface_security_group_association" "example" {
 
 ### Reference the Custom Image in Terraform
 Update the Terraform configuration to use the custom image created by Packer:
-
+```
 resource "azurerm_virtual_machine" "example" {
   name                  = "example-vm"
   location              = azurerm_resource_group.example.location
