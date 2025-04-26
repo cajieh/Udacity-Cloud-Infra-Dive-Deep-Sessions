@@ -27,3 +27,6 @@ main.tfplan
 
 # Ignore Packer variable files
 variables.pkrvars.hcl
+
+# Ignore main.tfplan files
+main.tfplan

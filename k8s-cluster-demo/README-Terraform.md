@@ -192,13 +192,13 @@ terraform init
 
 3. Run plan
 ```
-terraform plan
+terraform plan -out main.tfplan
 ```
 
 4. Apply Configuration:
 
 ```
-terraform apply
+terraform apply main.tfplan
 ```
 
 Optional: Use `terraform output` to print the details of resources
@@ -216,12 +216,24 @@ Optional: Use `terraform output` to print the details of resources
     This saves the private key to a file named private_key.pem and sets the correct permissions.
     Connect to the Jumpbox Using SSH Use the private key to connect to the jumpbox:
     
-    ```
-    ssh -i private_key.pem azureuser@<jumpbox-public-ip-or-dns>
-    ```
+      ```
+      ssh -i private_key.pem azureuser@<jumpbox-public-ip-or-dns>
+      ```
 
 - Access the Kubernetes cluster using the kubeconfig file.
-  ```
-  az aks get-credentials --resource-group k8s-cluster-demo-rg --name aks-cluster
-  ```
+    ```
+    az aks get-credentials --resource-group k8s-cluster-demo-rg --name aks-cluster
+    ```
   This command fetches the kubeconfig file, and merge it as current context. It is an Azure CLI command used to retrieve the kubeconfig file for an Azure Kubernetes Service (AKS) cluster. This file allows you to interact with the Kubernetes cluster using tools like kubectl.
+
+- Destroy Terraform resources:
+    ```
+    terraform plan -destroy -out main.destroy.tfplan
+
+    terraform apply main.destroy.tfplan
+    ```
+
+- Delete Packer image and resource group
+    ```
+    az group delete --name <resource-group-name> --yes
+    ```
