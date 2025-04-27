@@ -16,6 +16,7 @@ provider "azurerm" {
 resource "azurerm_resource_group" "example" {
   name     = "example-rg"
   location = "East US"
+  # tags = { Project: "MyProject"}
 }
 
 
@@ -247,7 +248,7 @@ resource "azurerm_network_security_group" "example" {
   name                = "example-nsg"
   location              = azurerm_resource_group.example.location
   resource_group_name   = azurerm_resource_group.example.name
-
+    tags = { Project: "MyProject"}
   # Allow SSH from any IP
   security_rule {
     name                       = "AllowSSH"
