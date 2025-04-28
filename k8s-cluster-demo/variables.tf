@@ -13,9 +13,7 @@ variable "name" {
 variable "tags" {
   description = "Tags for resources"
   type        = map(string)
-  default     = {
-    env = "dev"
-  }
+  default     = { Project: "Deploying-a-Web-Server-in-Azure"}
 }
 
 variable "packer_resource_group_name" {

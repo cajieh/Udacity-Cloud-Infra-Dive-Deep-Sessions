@@ -95,7 +95,7 @@ source "azure-arm" "builder" {
   oidc_request_token                = var.oidc_request_token
   vm_size                           = "Standard_B1s"
   azure_tags = {
-       DeploymentId = "277109"
+      Project: "Deploying-a-Web-Server-in-Azure"
   }
 }
 /**

@@ -20,7 +20,7 @@ resource "azurerm_policy_definition" "deny_resources_without_project_tag" {
         },
         {
           "field": "[concat('tags[', 'Project', ']')]",
-          "notEquals": "MyProject"
+          "notEquals": "Deploying-a-Web-Server-in-Azure"
         }
       ]
     },

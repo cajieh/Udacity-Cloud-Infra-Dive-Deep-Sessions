@@ -26,7 +26,10 @@ Use "anyOf" when you want to enforce either condition independently. For example
 Deny if the tag is missing.
 Deny if the tag exists but has an incorrect value.
 
-
+### Delete Policy Definition and Assignment
+- goto Azure portal
+- Locate Policy > Compliance tab
+- Select and delete
 ### Error 1:
 
 ```
@@ -70,4 +73,25 @@ terraform import azurerm_policy_definition.deny_resources_without_project_tag /s
 
 ```
 terraform state list
-``
+```
+
+### Error 3"
+```
+Error: Resource already managed by Terraform
+ Terraform is already managing a remote object for
+│ azurerm_policy_definition.deny_resources_without_project_tag. To import to this address you must
+│ first remove the existing object from the state.
+```
+
+ Remove the Resource from the State
+If you want Terraform to recreate the policy definition, you can remove the existing resource from the state and then reapply the configuration.
+
+ Remove the Resource from the State
+If you want Terraform to recreate the policy definition, you can remove the existing resource from the state and then reapply the configuration.
+
+#### Solution:
+Remove the Resource from the State
+If you want Terraform to recreate the policy definition, you can remove the existing resource from the state and then reapply the configuration.
+```
+terraform state rm azurerm_policy_definition.deny_resources_without_project_tag
+```

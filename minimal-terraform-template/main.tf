@@ -14,9 +14,9 @@ provider "azurerm" {
 # 
 # This resource group can be used as a container to manage and organize related Azure resources.
 resource "azurerm_resource_group" "example" {
-  name     = "example-rg"
+  name     = "k8s-cluster-demo-rg"
   location = "East US"
-  # tags = { Project: "MyProject"}
+  tags = { Project: "Deploying-a-Web-Server-in-Azure"}
 }
 
 
@@ -35,6 +35,7 @@ resource "azurerm_virtual_network" "example" {
   address_space       = ["10.0.0.0/16"]
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
+  tags = { Project: "Deploying-a-Web-Server-in-Azure"}
 }
 
 
@@ -77,6 +78,7 @@ resource "azurerm_public_ip" "example" {
   allocation_method   = "Static"
   sku                 = "Standard"
   domain_name_label   = "example-testing-vm" # Replace with a unique label
+  tags = { Project: "Deploying-a-Web-Server-in-Azure"}
 }
 
 
@@ -97,7 +99,8 @@ resource "azurerm_network_interface" "example" {
   name                = "example-nic"
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
-
+  tags = { Project: "Deploying-a-Web-Server-in-Azure"}
+  
   ip_configuration {
     name                          = "internal"
     subnet_id                     = azurerm_subnet.example.id
@@ -166,6 +169,8 @@ resource "azurerm_virtual_machine" "example" {
   os_profile_linux_config {
     disable_password_authentication = false
   }
+
+  tags = { Project: "Deploying-a-Web-Server-in-Azure"}
 }
 
 # Update to use image built with Packer
@@ -248,7 +253,7 @@ resource "azurerm_network_security_group" "example" {
   name                = "example-nsg"
   location              = azurerm_resource_group.example.location
   resource_group_name   = azurerm_resource_group.example.name
-    tags = { Project: "MyProject"}
+  tags = { Project: "Deploying-a-Web-Server-in-Azure"}
   # Allow SSH from any IP
   security_rule {
     name                       = "AllowSSH"
@@ -276,6 +281,8 @@ resource "azurerm_network_security_group" "example" {
     destination_address_prefix = "*"
   }
   */
+
+    
 }
 
 
