@@ -95,3 +95,18 @@ If you want Terraform to recreate the policy definition, you can remove the exis
 ```
 terraform state rm azurerm_policy_definition.deny_resources_without_project_tag
 ```
+
+### Error 4:
+
+```
+╷
+│ Error: creating Kubernetes Cluster (Subscription: "f6449a92-fa15-427a-b251-4b9ad313504f"
+│ Resource Group Name: "rg-holy-sunbeam"
+│ Kubernetes Cluster Name: "cluster-decent-egret"): performing CreateOrUpdate: unexpected status 400 (400 Bad Request) with response: {
+│   "code": "BadRequest",
+│   "details": null,
+│   "message": "The VM size of Standard_D2_v2 is not allowed in your subscription in location 'eastus'. The available VM sizes are 'standard_a2_v2,standard_a2m_v2,standard_a4_v
+```
+
+- Solution:
+  Select a VM that is allowed in the location

@@ -206,15 +206,16 @@ Optional: Use `terraform output` to print the details of resources
 5. Access Resources:
 
 - Use the public IP of the jumpbox to SSH into the environment.
-  After applying your Terraform configuration, retrieve the private key using:
+  Retrieves the private key using:
 
     ```
     terraform output -raw ssh_private_key > private_key.pem
     chmod 600 private_key.pem
 
     ```
-    This saves the private key to a file named private_key.pem and sets the correct permissions.
-    Connect to the Jumpbox Using SSH Use the private key to connect to the jumpbox:
+    This saves the private key to a file named "private_key.pem" and sets the correct permissions.
+
+- Connect to the Jumpbox Using SSH Use the private key to connect to the jumpbox:
     
       ```
       ssh -i private_key.pem azureuser@<jumpbox-public-ip-or-dns>
@@ -225,6 +226,16 @@ Optional: Use `terraform output` to print the details of resources
     az aks get-credentials --resource-group k8s-cluster-demo-rg --name aks-cluster
     ```
   This command fetches the kubeconfig file, and merge it as current context. It is an Azure CLI command used to retrieve the kubeconfig file for an Azure Kubernetes Service (AKS) cluster. This file allows you to interact with the Kubernetes cluster using tools like kubectl.
+#### Note: 
+When you create an AKS cluster using the azurerm_kubernetes_cluster resource, Azure automatically creates a managed resource group to store the cluster's infrastructure resources, such as:
+- Virtual machines for the Kubernetes nodes.
+- Load balancers.
+- Managed disks.
+- Networking resources.
+The naming convention for this auto-generated resource group is:
+  ```
+  MC_<original-resource-group-name>_<aks-cluster-name>_<region>
+  ```
 
 - Destroy Terraform resources:
     ```
