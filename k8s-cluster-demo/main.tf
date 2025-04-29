@@ -1,39 +1,3 @@
-terraform {
-
-  required_version = ">=0.12"
-
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "~>3.0"
-    }
-    azapi = {
-      source  = "Azure/azapi"
-      version = "~> 1.0"
-    }
-    local = {
-      source  = "hashicorp/local"
-      version = "2.4.0"
-    }
-    random = {
-      source  = "hashicorp/random"
-      version = "3.5.1"
-    }
-    tls = {
-      source  = "hashicorp/tls"
-      version = "4.0.4"
-    }
-  }
-}
-
-provider "azurerm" {
-  features {
-    resource_group {
-      prevent_deletion_if_contains_resources = false
-    }
-  }
-}
-
 module "resource_group" {
   source = "./modules/resource_group"
   name     = var.name
@@ -51,8 +15,6 @@ module "virtual_network" {
   subnet_name           = "vmss-subnet"
   subnet_address_prefixes = ["10.0.2.0/24"]
 }
-
-resource "random_pet" "id" {}
 
 resource "random_string" "fqdn" {
   length  = 6
@@ -112,22 +74,6 @@ data "azurerm_resource_group" "image" {
 data "azurerm_image" "image" {
   name                = var.packer_image_name
   resource_group_name = data.azurerm_resource_group.image.name
-}
-
-resource "azapi_resource" "ssh_public_key" {
-  type      = "Microsoft.Compute/sshPublicKeys@2022-11-01"
-  name      = random_pet.id.id
-  location  = var.location
-  parent_id =  module.resource_group.id
-}
-
-resource "azapi_resource_action" "ssh_public_key_gen" {
-  type        = "Microsoft.Compute/sshPublicKeys@2022-11-01"
-  resource_id = azapi_resource.ssh_public_key.id
-  action      = "generateKeyPair"
-  method      = "POST"
-
-  response_export_values = ["publicKey", "privateKey"]
 }
 
 resource "azurerm_virtual_machine_scale_set" "vmss" {
