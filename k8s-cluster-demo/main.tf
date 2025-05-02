@@ -77,7 +77,6 @@ resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   name                  = "vmscaleset-${count.index}"
   location            = var.location
   resource_group_name = module.resource_group.name
-  # upgrade_policy_mode = "Manual"
   sku                 = "Standard_B1s"
   instances           = 1
   admin_username      = "adminuser"
