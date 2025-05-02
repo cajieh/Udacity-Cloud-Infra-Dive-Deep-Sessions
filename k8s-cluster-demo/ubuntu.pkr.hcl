@@ -86,7 +86,7 @@ source "azure-arm" "builder" {
   image_publisher                   = "canonical"
   image_sku                         = "16.04-LTS"
   location                          = var.location
-  managed_image_name                = "myPackerImage"
+  managed_image_name                = "customPackerImage"
   managed_image_resource_group_name = var.image_resource_group_name
   os_type                           = "Linux"
   subscription_id                   = var.subscription_id

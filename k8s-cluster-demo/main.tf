@@ -76,52 +76,28 @@ data "azurerm_image" "image" {
   resource_group_name = data.azurerm_resource_group.image.name
 }
 
-resource "azurerm_virtual_machine_scale_set" "vmss" {
+resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
   name                = "vmscaleset"
   location            = var.location
   resource_group_name = module.resource_group.name
-  upgrade_policy_mode = "Manual"
+  # upgrade_policy_mode = "Manual"
+  sku                 = "Standard_B1s"
+  instances           = 1
+  admin_username      = "adminuser"
 
-  sku {
-    name     = "Standard_B1s"
-    tier     = "Standard"
-    capacity = 2
+admin_ssh_key {
+    username   = "adminuser"
+    public_key = azapi_resource_action.ssh_public_key_gen.output.publicKey
   }
 
-  storage_profile_image_reference {
-    id = data.azurerm_image.image.id
-  }
+   source_image_id = data.azurerm_image.image.id
 
-  storage_profile_os_disk {
-    name              = ""
+  os_disk {
     caching           = "ReadWrite"
-    create_option     = "FromImage"
-    managed_disk_type = "Standard_LRS"
+    storage_account_type = "Standard_LRS"
   }
 
-  storage_profile_data_disk {
-    lun           = 0
-    caching       = "ReadWrite"
-    create_option = "Empty"
-    disk_size_gb  = 10
-  }
-
-  os_profile {
-    computer_name_prefix = "vmlab"
-    admin_username       = var.admin_user
-    admin_password       = var.admin_password
-  }
-
-  os_profile_linux_config {
-  disable_password_authentication = false
-
-  ssh_keys {
-    path     = "/home/azureuser/.ssh/authorized_keys"
-    key_data = azapi_resource_action.ssh_public_key_gen.output.publicKey
-  }
-}
-
-  network_profile {
+  network_interface {
     name    = "terraformnetworkprofile"
     primary = true
 

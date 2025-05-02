@@ -23,7 +23,7 @@ variable "packer_resource_group_name" {
 
 variable "packer_image_name" {
   description = "Name of the Packer image"
-  default     = "myPackerImage"
+  default     = "customPackerImage"
 }
 
 variable "resource_group_name" {
