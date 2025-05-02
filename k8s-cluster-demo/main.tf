@@ -67,17 +67,14 @@ resource "azurerm_lb_rule" "lbnatrule" {
   probe_id                       = azurerm_lb_probe.vmss.id
 }
 
-data "azurerm_resource_group" "image" {
-  name = module.resource_group.name
-}
-
 data "azurerm_image" "image" {
   name                = var.packer_image_name
-  resource_group_name = data.azurerm_resource_group.image.name
+  resource_group_name = module.resource_group.name
 }
 
 resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
-  name                = "vmscaleset"
+  count                 = var.vm_count
+  name                  = "vmscaleset-${count.index}"
   location            = var.location
   resource_group_name = module.resource_group.name
   # upgrade_policy_mode = "Manual"
@@ -190,47 +187,6 @@ resource "azurerm_network_interface_security_group_association" "jumpbox" {
   count                     = var.vm_count
   network_interface_id      = azurerm_network_interface.jumpbox[count.index].id
   network_security_group_id = azurerm_network_security_group.jumpbox.id
-}
-
-
-resource "azurerm_virtual_machine" "jumpbox" {
-  count                 = var.vm_count
-  name                  = "jumpbox-${count.index}"
-  location              = var.location
-  resource_group_name   = module.resource_group.name
-  network_interface_ids = [element(azurerm_network_interface.jumpbox.*.id, count.index)]
-  vm_size               = "Standard_B1s"
-
-  storage_image_reference {
-    publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "16.04-LTS"
-    version   = "latest"
-  }
-
-  storage_os_disk {
-    name              = "jumpbox-osdisk-${count.index}"
-    caching           = "ReadWrite"
-    create_option     = "FromImage"
-    managed_disk_type = "Standard_LRS"
-  }
-
-  os_profile {
-    computer_name  = "jumpbox-${count.index}"
-    admin_username = var.admin_user
-    admin_password = var.admin_password
-  }
-
-  os_profile_linux_config {
-    disable_password_authentication = true
-
-    ssh_keys {
-      path     = "/home/azureuser/.ssh/authorized_keys"
-      key_data = azapi_resource_action.ssh_public_key_gen.output.publicKey
-    }
-  }
-
-  tags = var.tags
 }
 
 module "kubernetes_cluster" {
