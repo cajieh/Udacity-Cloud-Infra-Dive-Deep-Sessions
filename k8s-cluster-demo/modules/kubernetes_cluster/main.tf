@@ -5,9 +5,9 @@ resource "azurerm_kubernetes_cluster" "aks" {
   dns_prefix          = var.dns_prefix
 
   default_node_pool {
-    name       = var.default_node_pool_name
-    node_count = var.default_node_pool_node_count
-    vm_size    = var.default_node_pool_vm_size
+    name       = "default"
+    node_count = 2
+    vm_size    = "Standard_B2ms"
   }
 
   identity {
@@ -15,8 +15,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 
   network_profile {
-    network_plugin     = var.network_plugin
-    load_balancer_sku  = var.load_balancer_sku
+    network_plugin     = "azure"
+    load_balancer_sku  = "standard"
   }
 
   tags = var.tags

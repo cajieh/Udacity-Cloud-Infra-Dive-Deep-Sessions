@@ -7,11 +7,11 @@ module "resource_group" {
 
 module "virtual_network" {
   source                = "./modules/virtual_network"
-  vnet_name             = "vmss-vnet"
-  address_space         = ["10.0.0.0/16"]
   location              = var.location
   resource_group_name   = module.resource_group.name
   tags                  = var.tags
+  vnet_name             = "vmss-vnet"
+  address_space         = ["10.0.0.0/16"] # Pass the required address_space variable
   subnet_name           = "vmss-subnet"
   subnet_address_prefixes = ["10.0.2.0/24"]
 }
@@ -194,13 +194,5 @@ module "kubernetes_cluster" {
   location            = var.location
   resource_group_name = module.resource_group.name
   dns_prefix          = "aks-${random_string.fqdn.result}"
-
-  default_node_pool_name       = "default"
-  default_node_pool_node_count = 2
-  default_node_pool_vm_size    = "Standard_B2ms"
-
-  network_plugin    = "azure"
-  load_balancer_sku = "standard"
-
   tags = var.tags
 }
