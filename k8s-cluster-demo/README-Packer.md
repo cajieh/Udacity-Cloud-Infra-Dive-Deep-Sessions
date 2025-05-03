@@ -111,7 +111,7 @@ build {
 2. Install Nginx:
    ```
    apt-get -y install nginx
-   ````
+   ```
    Installs the Nginx web server.
 3. Custom HTML Page:
 
@@ -217,7 +217,7 @@ packer build -var-file=variables.pkrvars.hcl ubuntu.pkr.hcl
 
 ##### Expected Outcome
 
-- A custom Azure Managed Image named customPackerImage will be created in the resource group k8s-cluster-demo-rg.
+- A custom Azure Managed Image named customPackerImage will be created in the resource group modern-cloud-infra.
 - The image will have:
   Nginx installed.
   A custom HTML page at `/var/www/html/index.html`.

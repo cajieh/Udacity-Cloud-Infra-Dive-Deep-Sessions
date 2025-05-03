@@ -14,8 +14,8 @@ resource "azurerm_policy_definition" "deny_resources_without_env_tag" {
   name         = "deny-resources-without-env-tag"
   policy_type  = "Custom"
   mode         = "All"
-  display_name = "Deny resources without Project tag"
-  description  = "This policy denies the creation of resources that do not have the required Project tag with the value 'MyProject'."
+  display_name = "Deny resources without 'env' tag"
+  description  = "This policy denies the creation of resources that do not have the required 'env' tag with the value 'dev'."
 
   policy_rule = <<POLICY
   {
@@ -49,7 +49,7 @@ data "azurerm_subscription" "current" {}
 
 # Assign the Policy to the Subscription
 resource "azurerm_subscription_policy_assignment" "policy_assignment" {
-  name                 = "mypolicy_assignment"
+  name                 = "policy_assignment"
   policy_definition_id = azurerm_policy_definition.deny_resources_without_env_tag.id
   subscription_id      = data.azurerm_subscription.current.id
 }

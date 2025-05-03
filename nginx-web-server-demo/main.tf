@@ -1,6 +1,6 @@
 
 module "resource_group" {
-  source = "../k8s-cluster-demo/modules/resource_group"
+  source = "../common/modules/resource_group"
   name     = var.name
   location = var.location
   tags     = var.tags
@@ -22,6 +22,6 @@ data "azurerm_resource_group" "image" {
 }
 
 data "azurerm_image" "image" {
-  name                = var.packer_image_name
+  name                =  var.packer_image_name
   resource_group_name = data.azurerm_resource_group.image.name
 }

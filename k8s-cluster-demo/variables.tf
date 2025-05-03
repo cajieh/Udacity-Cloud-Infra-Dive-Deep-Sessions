@@ -7,7 +7,7 @@ variable "location" {
 variable "name" {
   description = "Name of the resource group"
   type        = string
-  default     = "k8s-cluster-demo-rg"
+  default     = "modern-cloud-infra"
 }
 
 variable "tags" {

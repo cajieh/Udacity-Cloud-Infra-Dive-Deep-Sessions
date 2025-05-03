@@ -5,6 +5,7 @@ resource "azurerm_network_security_group" "jumpbox" {
   name                = "jumpbox-nsg"
   location            = var.location
   resource_group_name = module.resource_group.name
+  tags     = var.tags
 
   # Allow SSH from any IP
   security_rule {

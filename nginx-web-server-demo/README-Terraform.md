@@ -1,26 +1,27 @@
 ## Cloud Infra Demo - Terraform
 
 ### Introduction
+
 This Terraform configuration defines a complete infrastructure setup in Azure, including a resource group, virtual network, jumpbox virtual machines, virtual machine scale set (VMSS), load balancer, network security group (NSG), and a Kubernetes cluster. Below is a detailed explanation of the key components:
 
 #### Preinstallation:
+
 Configure your environment:
+
 - Azure subscription: If you don't have an Azure subscription, create a free account before you begin.
 - Setup Configure Azure CLI, Packer, Terraform
 - Create Resource Group
-    ```
-    az group create -n k8s-cluster-demo-rg -l eastus
-    ```
+  ```
+  az group create -n modern-cloud-infra -l eastus
+  ```
 - Show Azure Subscription ID
-    ```
-    az account show --query "{ subscription_id: id }"
-    ```
+  ```
+  az account show --query "{ subscription_id: id }"
+  ```
 - Run `az ad sp create-for-rbac` to to authenticate to Azure using a service principal.
-    ```
-    az ad sp create-for-rbac --role Contributor --scopes /subscriptions/<subscription_id> --query "{ client_id: appId, client_secret: password, tenant_id: tenant }"
-    ```
-Key points: Make note of the output values (appId, client_secret, tenant_id)
-
+  `    az ad sp create-for-rbac --role Contributor --scopes /subscriptions/<subscription_id> --query "{ client_id: appId, client_secret: password, tenant_id: tenant }"
+   `
+  Key points: Make note of the output values (appId, client_secret, tenant_id)
 
 1. Terraform Configuration and Providers
 
@@ -50,9 +51,11 @@ module "resource_group" {
   tags     = var.tags
 }
 ```
+
 Resource Group: A module is used to create a resource group. The name, location, and tags are passed as variables.
 
 3. Virtual Network
+
 ```
 module "virtual_network" {
   source                = "./modules/virtual_network"
@@ -141,6 +144,7 @@ module "kubernetes_cluster" {
   tags = var.tags
 }
 ```
+
 - Kubernetes Cluster: A module is used to create an Azure Kubernetes Service (AKS) cluster.
 - Node Pool: Configures a default node pool with 2 nodes of size Standard_B2ms.
 - Networking: Uses the Azure CNI plugin and a standard load balancer.
@@ -151,35 +155,40 @@ module "kubernetes_cluster" {
 resource "azapi_resource" "ssh_public_key" { ... }
 resource "azapi_resource_action" "ssh_public_key_gen" { ... }
 ```
+
 SSH Public Key: Uses the azapi provider to create and manage SSH keys for the VMs and VMSS.
 
 11. Tags
 
 All resources include tags for better organization and management:
+
 ```
 tags = var.tags
 ```
 
-
 ### Key Features
 
 #### Modular Design:
+
 - Uses modules for the resource group, virtual network, and Kubernetes cluster.
 - Makes the configuration reusable and easier to manage.
 
 #### Dynamic Scaling:
+
 - The count meta-argument is used to dynamically create multiple jumpbox VMs.
-Security:
+  Security:
 - NSG rules restrict inbound traffic to SSH and HTTP while denying all other traffic.
 
 #### Load Balancer:
+
 Distributes traffic to the VMSS backend pool.
 
 #### Kubernetes Integration:
+
 Deploys an AKS cluster with a default node pool.
 
-
 ### How to Use
+
 1. Set Variables:
 
 Define values for variables like vm_count, admin_user, and admin_password in a terraform.tfvars file.
@@ -191,6 +200,7 @@ terraform init
 ```
 
 3. Run plan
+
 ```
 terraform plan -out main.tfplan
 ```
@@ -208,43 +218,49 @@ Optional: Use `terraform output` to print the details of resources
 - Use the public IP of the jumpbox to SSH into the environment.
   Retrieves the private key using:
 
-    ```
-    terraform output -raw ssh_private_key > private_key.pem
-    chmod 600 private_key.pem
+  ```
+  terraform output -raw ssh_private_key > private_key.pem
+  chmod 600 private_key.pem
 
-    ```
-    This saves the private key to a file named "private_key.pem" and sets the correct permissions.
+  ```
+
+  This saves the private key to a file named "private_key.pem" and sets the correct permissions.
 
 - Connect to the Jumpbox Using SSH Use the private key to connect to the jumpbox:
-    
+
       ```
       ssh -i private_key.pem azureuser@<jumpbox-public-ip-or-dns>
       ```
 
 - Access the Kubernetes cluster using the kubeconfig file.
-    ```
-    az aks get-credentials --resource-group k8s-cluster-demo-rg --name aks-cluster
-    ```
+  ```
+  az aks get-credentials --resource-group modern-cloud-infra --name aks-cluster
+  ```
   This command fetches the kubeconfig file, and merge it as current context. It is an Azure CLI command used to retrieve the kubeconfig file for an Azure Kubernetes Service (AKS) cluster. This file allows you to interact with the Kubernetes cluster using tools like kubectl.
-#### Note: 
+
+#### Note:
+
 When you create an AKS cluster using the azurerm_kubernetes_cluster resource, Azure automatically creates a managed resource group to store the cluster's infrastructure resources, such as:
+
 - Virtual machines for the Kubernetes nodes.
 - Load balancers.
 - Managed disks.
 - Networking resources.
-The naming convention for this auto-generated resource group is:
+  The naming convention for this auto-generated resource group is:
+
   ```
   MC_<original-resource-group-name>_<aks-cluster-name>_<region>
   ```
 
 - Destroy Terraform resources:
-    ```
-    terraform plan -destroy -out main.destroy.tfplan
 
-    terraform apply main.destroy.tfplan
-    ```
+  ```
+  terraform plan -destroy -out main.destroy.tfplan
+
+  terraform apply main.destroy.tfplan
+  ```
 
 - Delete Packer image and resource group
-    ```
-    az group delete --name <resource-group-name> --yes
-    ```
+  ```
+  az group delete --name <resource-group-name> --yes
+  ```

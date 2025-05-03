@@ -46,7 +46,7 @@ variable location {
 
 variable "image_resource_group_name" {
   description = "Name of the resource group in which the Packer image will be created"
-  default     = "k8s-cluster-demo-rg"
+  default     = "modern-cloud-infra"
 }
 
 variable "oidc_request_url" {
@@ -86,7 +86,7 @@ source "azure-arm" "builder" {
   image_publisher                   = "canonical"
   image_sku                         = "16.04-LTS"
   location                          = var.location
-  managed_image_name                = "myPackerImage"
+  managed_image_name                = "customPackerImage"
   managed_image_resource_group_name = var.image_resource_group_name
   os_type                           = "Linux"
   subscription_id                   = var.subscription_id
@@ -95,7 +95,7 @@ source "azure-arm" "builder" {
   oidc_request_token                = var.oidc_request_token
   vm_size                           = "Standard_B1s"
   azure_tags = {
-      Project: "Deploying-a-Web-Server-in-Azure"
+      env: "dev"
   }
 }
 /**

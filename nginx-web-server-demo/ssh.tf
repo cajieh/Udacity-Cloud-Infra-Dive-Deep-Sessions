@@ -4,6 +4,7 @@ resource "azapi_resource" "ssh_public_key" {
   name      = random_pet.id.id
   location  = var.location
   parent_id =  module.resource_group.id
+tags     = var.tags
 }
 
 resource "azapi_resource_action" "ssh_public_key_gen" {

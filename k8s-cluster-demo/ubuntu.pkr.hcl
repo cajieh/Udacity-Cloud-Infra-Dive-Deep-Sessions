@@ -46,7 +46,7 @@ variable location {
 
 variable "image_resource_group_name" {
   description = "Name of the resource group in which the Packer image will be created"
-  default     = "k8s-cluster-demo-rg"
+  default     = "modern-cloud-infra"
 }
 
 variable "oidc_request_url" {

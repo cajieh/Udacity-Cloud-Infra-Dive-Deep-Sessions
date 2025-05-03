@@ -14,7 +14,7 @@ provider "azurerm" {
 # 
 # This resource group can be used as a container to manage and organize related Azure resources.
 resource "azurerm_resource_group" "example" {
-  name     = "k8s-cluster-demo-rg"
+  name     = "modern-cloud-infra"
   location = "East US"
   tags = { Project: "Deploying-a-Web-Server-in-Azure"}
 }

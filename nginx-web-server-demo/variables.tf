@@ -7,18 +7,13 @@ variable "location" {
 variable "name" {
   description = "Name of the resource group"
   type        = string
-  default     = "k8s-cluster-demo-rg"
+  default     = "modern-cloud-infra"
 }
 
 variable "tags" {
   description = "Tags for resources"
   type        = map(string)
-  default     = { Project: "Deploying-a-Web-Server-in-Azure"}
-}
-
-variable "packer_resource_group_name" {
-  description = "Name of the resource group in which the Packer image will be created"
-  default     = "Azuredevops"
+  default     = { env: "dev"}
 }
 
 variable "packer_image_name" {
