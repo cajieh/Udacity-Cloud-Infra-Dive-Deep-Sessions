@@ -13,7 +13,7 @@ variable "name" {
 variable "tags" {
   description = "Tags for resources"
   type        = map(string)
-  default     = { Project: "Deploying-a-Web-Server-in-Azure"}
+  default     = { project: "modern-cloud-infra"}
 }
 
 variable "packer_resource_group_name" {
@@ -50,4 +50,12 @@ variable "vm_count" {
   description = "The number of virtual machines to create"
   type        = number
   default     = 2
+}
+
+variable "appId" {
+  description = "Azure Kubernetes Service Cluster service principal"
+}
+
+variable "password" {
+  description = "Azure Kubernetes Service Cluster password"
 }
