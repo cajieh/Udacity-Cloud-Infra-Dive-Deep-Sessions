@@ -1,38 +1,3 @@
-terraform {
-
-  required_version = ">=0.12"
-
-  required_providers {
-    azurerm = {
-      source  = "hashicorp/azurerm"
-      version = "~>3.0"
-    }
-    azapi = {
-      source  = "Azure/azapi"
-      version = "~> 1.0"
-    }
-    local = {
-      source  = "hashicorp/local"
-      version = "2.4.0"
-    }
-    random = {
-      source  = "hashicorp/random"
-      version = "3.5.1"
-    }
-    tls = {
-      source  = "hashicorp/tls"
-      version = "4.0.4"
-    }
-  }
-}
-
-provider "azurerm" {
-  features {
-    resource_group {
-      prevent_deletion_if_contains_resources = false
-    }
-  }
-}
 
 module "resource_group" {
   source = "../k8s-cluster-demo/modules/resource_group"
@@ -215,61 +180,6 @@ resource "azurerm_network_interface" "jumpbox" {
 
   tags = var.tags
 }
-
-# A Network Security Group (NSG) that allows SSH (port 22) and HTTP 
-# (port 80) traffic while denying all other inbound traffic
-resource "azurerm_network_security_group" "jumpbox" {
-  name                = "jumpbox-nsg"
-  location            = var.location
-  resource_group_name = module.resource_group.name
-
-  # Allow SSH from any IP
-  security_rule {
-    name                       = "AllowSSH"
-    priority                   = 100
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "22"
-    source_address_prefix      = "*" # Replace with your IP for better security
-    destination_address_prefix = "*"
-  }
-
-  # Allow HTTP from any IP
-  security_rule {
-    name                       = "AllowHTTP"
-    priority                   = 110
-    direction                  = "Inbound"
-    access                     = "Allow"
-    protocol                   = "Tcp"
-    source_port_range          = "*"
-    destination_port_range     = "80"
-    source_address_prefix      = "*" # Replace with your IP for better security
-    destination_address_prefix = "*"
-  }
-
-  # Deny all other inbound traffic
-  security_rule {
-    name                       = "DenyAllInbound"
-    priority                   = 200
-    direction                  = "Inbound"
-    access                     = "Deny"
-    protocol                   = "*"
-    source_port_range          = "*"
-    destination_port_range     = "*"
-    source_address_prefix      = "*"
-    destination_address_prefix = "*"
-  }
-}
-
-
-resource "azurerm_network_interface_security_group_association" "jumpbox" {
-  count                     = var.vm_count
-  network_interface_id      = azurerm_network_interface.jumpbox[count.index].id
-  network_security_group_id = azurerm_network_security_group.jumpbox.id
-}
-
 
 resource "azurerm_virtual_machine" "jumpbox" {
   count                 = var.vm_count
