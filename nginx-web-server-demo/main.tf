@@ -35,7 +35,7 @@ provider "azurerm" {
 }
 
 module "resource_group" {
-  source = "./modules/resource_group"
+  source = "../k8s-cluster-demo/modules/resource_group"
   name     = var.name
   location = var.location
   tags     = var.tags
