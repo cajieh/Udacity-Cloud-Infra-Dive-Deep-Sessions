@@ -13,5 +13,5 @@ variable "name" {
 variable "tags" {
   description = "Tags for resources"
   type        = map(string)
-  default     = { env: "dev"}
+  default     = { project: "modern-cloud-infra"}
 }

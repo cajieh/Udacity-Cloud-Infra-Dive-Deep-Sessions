@@ -94,9 +94,7 @@ source "azure-arm" "builder" {
   oidc_request_url                  = var.oidc_request_url
   oidc_request_token                = var.oidc_request_token
   vm_size                           = "Standard_B1s"
-  azure_tags = {
-      env: "dev"
-  }
+  azure_tags                        = { project: "modern-cloud-infra"}
 }
 /**
  * This Packer template defines a build configuration for creating a custom Ubuntu image.

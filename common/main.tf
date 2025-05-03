@@ -10,24 +10,24 @@ module "resource_group" {
 }
 
 # Define the Azure Policy
-resource "azurerm_policy_definition" "deny_resources_without_env_tag" {
-  name         = "deny-resources-without-env-tag"
+resource "azurerm_policy_definition" "deny_resources_without_project_tag" {
+  name         = "deny-resources-without-project-modern-cloud-infra-tag"
   policy_type  = "Custom"
   mode         = "All"
-  display_name = "Deny resources without 'env' tag"
-  description  = "This policy denies the creation of resources that do not have the required 'env' tag with the value 'dev'."
+  display_name = "Deny resources without 'project: modern-cloud-infra' tag"
+  description  = "This policy denies the creation of resources that do not have the required 'project' tag with the value 'modern-cloud-infra'."
 
   policy_rule = <<POLICY
   {
     "if": {
       "anyOf": [
         {
-          "field": "[concat('tags[', 'env', ']')]",
+          "field": "[concat('tags[', 'project', ']')]",
           "exists": "false"
         },
         {
-          "field": "[concat('tags[', 'env', ']')]",
-          "notEquals": "dev"
+          "field": "[concat('tags[', 'project', ']')]",
+          "notEquals": "modern-cloud-infra"
         }
       ]
     },
@@ -49,7 +49,7 @@ data "azurerm_subscription" "current" {}
 
 # Assign the Policy to the Subscription
 resource "azurerm_subscription_policy_assignment" "policy_assignment" {
-  name                 = "policy_assignment"
-  policy_definition_id = azurerm_policy_definition.deny_resources_without_env_tag.id
+  name                 = "modern_cloud_infra_policy_assignment"
+  policy_definition_id = azurerm_policy_definition.deny_resources_without_project_tag.id
   subscription_id      = data.azurerm_subscription.current.id
 }
