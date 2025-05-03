@@ -44,6 +44,7 @@ resource "azurerm_policy_definition" "deny_resources_without_project_tag" {
   METADATA
 }
 
+/*
 # Retrieve the current subscription details
 data "azurerm_subscription" "current" {}
 
@@ -52,4 +53,21 @@ resource "azurerm_subscription_policy_assignment" "policy_assignment" {
   name                 = "modern_cloud_infra_policy_assignment"
   policy_definition_id = azurerm_policy_definition.deny_resources_without_project_tag.id
   subscription_id      = data.azurerm_subscription.current.id
+}
+
+output "subscription_id" {
+  value = data.azurerm_subscription.current.id
+}
+*/
+
+# Assign the Policy to the Resource Group
+resource "azurerm_resource_group_policy_assignment" "policy_assignment" {
+  name                        = "modern_cloud_infra_policy_assignment"
+  policy_definition_id        = azurerm_policy_definition.deny_resources_without_project_tag.id
+   resource_group_id          = module.resource_group.id
+
+}
+
+output "resource_group_id" {
+  value = module.resource_group.id
 }
