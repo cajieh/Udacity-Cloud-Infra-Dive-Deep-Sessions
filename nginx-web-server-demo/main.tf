@@ -17,11 +17,7 @@ module "virtual_network" {
   subnet_address_prefixes = ["10.0.2.0/24"]
 }
 
-data "azurerm_resource_group" "image" {
-  name = module.resource_group.name
-}
-
 data "azurerm_image" "image" {
   name                =  var.packer_image_name
-  resource_group_name = data.azurerm_resource_group.image.name
+  resource_group_name = module.resource_group.name
 }
