@@ -125,7 +125,7 @@ spec:
           - containerPort: 3000
         env:
         - name: REACT_APP_BACKEND_URL
-          value: "http://4.156.111.108:4000"
+          value: "http://128.203.68.59:4000"
         - name: REACT_APP_NODE_ENV
           value: "production"
 

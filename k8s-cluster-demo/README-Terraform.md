@@ -215,6 +215,10 @@ Optional: Use `terraform output` to print the details of resources
 
 5. Access Resources:
 
+```
+az aks get-credentials --resource-group $(terraform output -raw resource_group_name) --name $(terraform output -raw kubernetes_cluster_name)
+``
+
 - Use the public IP of the jumpbox to SSH into the environment.
   Retrieves the private key using:
 
