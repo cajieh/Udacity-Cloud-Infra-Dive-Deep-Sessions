@@ -222,3 +222,6 @@ packer build -var-file=variables.pkrvars.hcl ubuntu.pkr.hcl
   Nginx installed.
   A custom HTML page at `/var/www/html/index.html`.
 - The image can be used to deploy VMs or VM scale sets in Azure.
+
+#### Instal Packer on Azure CLI Shell
+Link: https://gist.github.com/Adron/90863e51c8c5c0ad2049890bcd8abbfb

@@ -23,7 +23,7 @@ variable "packer_image_name" {
 
 variable "resource_group_name" {
   description = "Name of the resource group in which the Packer image  will be created"
-  default     = "Azuredevops"
+  default     = "modern-cloud-infra"
 }
 
 variable "application_port" {

@@ -125,7 +125,7 @@ spec:
           - containerPort: 3000
         env:
         - name: REACT_APP_BACKEND_URL
-          value: "http://128.203.68.59:4000"
+          value: "http://<backend-service-ip-or-name>:4000"
         - name: REACT_APP_NODE_ENV
           value: "production"
 
@@ -153,11 +153,19 @@ status:
 apiVersion: v1
 data:
   dbname: taskmanager # Create the database in the MySQL pod container.
-                      # Exec into the MySQL pod container and run the following command:
-                      # mysql -u root -p
+                      # Exec into the MySQL pod container
+                      # - kubectl exec --stdin --tty <mysql-deployment-name> -- /bin/bash
+                      # n the following command to login into MySQL:
+                      # - mysql -u root -p
                       # Enter the password value encoded in myqsl-secret resource: password
+                      # Then run the following command to create the database:
                       # - CREATE DATABASE taskmanager;
-                      # - kubectl exec --stdin --tty mysql-deployment-865dbf9bb-vtnqz -- /bin/bash
+                      # This database name should match the value in the backend-cm ConfigMap.
+                      # You can verify the database creation by running:
+                      # - SHOW DATABASES;
+                      # After creating the database, exit MySQL by typing 'exit'.
+                      # Delete the backend pod to ensure it picks up the new database.
+                      # kubectl delete pod <backend-pod-name>
   host: mysql-svc.default.svc.cluster.local
 kind: ConfigMap
 metadata:
