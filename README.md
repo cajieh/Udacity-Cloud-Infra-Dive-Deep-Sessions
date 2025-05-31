@@ -2,7 +2,7 @@
 
 ## Udacity Deep Dive Session on Modern Cloud Infrastructure using Terraform, Packer and Azure cloud
 
-### Course: https://www.udacity.com/enrollment/nd101-ent-cloud-costco
+### Course: Azure Infrastructure Operations
 
 ### Project: Deploying a Web Server in Azure
 
