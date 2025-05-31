@@ -12,10 +12,6 @@
 
 ## Introduction:
 
-### Salutation:
-
-Hi everyone, ...
-
 ### About the Deep Dive Session on Modern Cloud Infrastructure:
 
 The session will focus on reviewing key course concepts of “Azure Infrastructure Operations” and provide an in-depth walkthrough of the “Deploying a Web Server in Azure” project. Additionally, you will be introduced to provisioning Azure Kubernetes Service and best practices for infrastructure provisioning.
